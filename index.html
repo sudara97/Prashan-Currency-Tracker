@@ -15,9 +15,7 @@
         }
         h1 {
             color: #ffa31a;
-        
             font-weight: 300;
-        
             font-family: 'Raleway', sans-serif;
         }
         table {
@@ -25,7 +23,6 @@
             margin: auto;
             border-collapse: collapse;
             background: #292929;
-            
             border-radius: 8px;
             overflow: hidden;
         }
@@ -68,35 +65,5 @@
     <script>
         const sheetId = "1gBu3LPULKEzFrsBlGfvmfxmjFdA-qzQFvx6T2Op6vyM";
         const apiKey = "AIzaSyCqG-forC4jdV7c9PJbZkbdKklb2rsYHUE";
-        const range = "A1:A7";
-        const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}`;
-
-        async function fetchCurrencyData() {
-            try {
-                const response = await fetch(url);
-                const data = await response.json();
-                const values = data.values;
-                
-                if (!values || values.length === 0) {
-                    document.getElementById("currencyData").innerHTML = "<tr><td colspan='2'>No data available</td></tr>";
-                    return;
-                }
-                
-                const currencies = ["SGD", "AUD", "NZD", "AED", "CAD", "INR", "RMB"];
-                let tableRows = "";
-                
-                values.forEach((price, index) => {
-                    tableRows += `<tr><td>${currencies[index]}</td><td>${price[0]}</td></tr>`;
-                });
-                
-                document.getElementById("currencyData").innerHTML = tableRows;
-            } catch (error) {
-                document.getElementById("currencyData").innerHTML = "<tr><td colspan='2'>Error fetching data</td></tr>";
-                console.error("Error fetching currency data:", error);
-            }
-        }
-        
-        fetchCurrencyData();
-    </script>
-</body>
-</html>
+        const range = "A1:A8";  // Updated range to include USD
+        const url = `https://sheets.googleapis.co
