@@ -15,9 +15,7 @@
         }
         h1 {
             color: #ffa31a;
-        
             font-weight: 300;
-        
             font-family: 'Raleway', sans-serif;
         }
         table {
@@ -25,7 +23,6 @@
             margin: auto;
             border-collapse: collapse;
             background: #292929;
-            
             border-radius: 8px;
             overflow: hidden;
         }
@@ -68,7 +65,7 @@
     <script>
         const sheetId = "1gBu3LPULKEzFrsBlGfvmfxmjFdA-qzQFvx6T2Op6vyM";
         const apiKey = "AIzaSyCqG-forC4jdV7c9PJbZkbdKklb2rsYHUE";
-        const range = "A1:A7";
+        const range = "A1:A8";  // Updated range to include USD
         const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}`;
 
         async function fetchCurrencyData() {
@@ -82,7 +79,7 @@
                     return;
                 }
                 
-                const currencies = ["SGD", "AUD", "NZD", "AED", "CAD", "INR", "RMB"];
+                const currencies = ["SGD", "AUD", "NZD", "AED", "CAD", "INR", "RMB", "USD"];  // Added USD
                 let tableRows = "";
                 
                 values.forEach((price, index) => {
