@@ -68,7 +68,7 @@
     <script>
         const sheetId = "1gBu3LPULKEzFrsBlGfvmfxmjFdA-qzQFvx6T2Op6vyM";
         const apiKey = "AIzaSyCqG-forC4jdV7c9PJbZkbdKklb2rsYHUE";
-        const range = "A1:A6";
+        const range = "A1:A7";
         const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}`;
 
         async function fetchCurrencyData() {
@@ -82,7 +82,7 @@
                     return;
                 }
                 
-                const currencies = ["SGD", "AUD", "NZD", "AED", "CAD", "INR"];
+                const currencies = ["SGD", "AUD", "NZD", "AED", "CAD", "INR", "RMB"];
                 let tableRows = "";
                 
                 values.forEach((price, index) => {
