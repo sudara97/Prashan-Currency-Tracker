@@ -5,6 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Currency Tracker</title>
+    
+    <!-- PWA Requirements -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#ffa31a">
+    
+    <!-- PWA Icons -->
+    <link rel="icon" href="icon-192x192.png">
+    <link rel="apple-touch-icon" href="icon-512x512.png">
+    
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -37,6 +46,13 @@
         td {
             color: #ffffff;
         }
+        #offline-message {
+            display: none;
+            color: #ff4c4c;
+            font-size: 18px;
+            margin-top: 10px;
+            font-weight: bold;
+        }
         footer {
             margin-top: 20px;
             font-size: 14px;
@@ -46,6 +62,10 @@
 </head>
 <body>
     <h1>My Currency Tracker</h1>
+
+    <!-- Offline Message -->
+    <div id="offline-message">⚠️ You are offline. Some features may not work.</div>
+
     <table>
         <thead>
             <tr>
@@ -61,11 +81,11 @@
     <footer>
         &copy; Sudara Galgamuwa
     </footer>
-    
+
     <script>
         const sheetId = "1gBu3LPULKEzFrsBlGfvmfxmjFdA-qzQFvx6T2Op6vyM";
         const apiKey = "AIzaSyCqG-forC4jdV7c9PJbZkbdKklb2rsYHUE";
-        const range = "A1:A8";  // Updated range to include USD
+        const range = "A1:A8"; // Updated to include USD
         const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}`;
 
         async function fetchCurrencyData() {
@@ -79,7 +99,7 @@
                     return;
                 }
                 
-                const currencies = ["SGD", "AUD", "NZD", "AED", "CAD", "INR", "RMB", "USD"];  // Added USD
+                const currencies = ["SGD", "AUD", "NZD", "AED", "CAD", "INR", "RMB", "USD"];
                 let tableRows = "";
                 
                 values.forEach((price, index) => {
@@ -94,6 +114,33 @@
         }
         
         fetchCurrencyData();
+
+        // Offline Detection
+        function updateOnlineStatus() {
+            const offlineMessage = document.getElementById("offline-message");
+            if (navigator.onLine) {
+                offlineMessage.style.display = "none";
+            } else {
+                offlineMessage.style.display = "block";
+            }
+        }
+
+        window.addEventListener("load", updateOnlineStatus);
+        window.addEventListener("online", updateOnlineStatus);
+        window.addEventListener("offline", updateOnlineStatus);
+
+        // Register Service Worker for PWA
+        if ("serviceWorker" in navigator) {
+            window.addEventListener("load", () => {
+                navigator.serviceWorker.register("/service-worker.js")
+                    .then(registration => {
+                        console.log("Service Worker registered:", registration);
+                    })
+                    .catch(error => {
+                        console.log("Service Worker registration failed:", error);
+                    });
+            });
+        }
     </script>
 </body>
 </html>
